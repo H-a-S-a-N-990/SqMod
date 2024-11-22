@@ -18,8 +18,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          sudo apt-get update || { echo "apt-get update failed"; exit 1; }
+          sudo apt-get install -y --no-install-recommends \
             cmake \
             build-essential \
             libssl-dev \
@@ -34,7 +34,7 @@ jobs:
             libapr1-dev \
             libaprutil1-dev \
             libodbcinstq4-dev \
-            apache2-dev
+            apache2-dev || { echo "apt-get install failed"; exit 1; }
 
       - name: Create build directory
         run: mkdir build
@@ -47,8 +47,3 @@ jobs:
 
       - name: Run tests
         run: cd build && ctest
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C $BUILD_TYPE
