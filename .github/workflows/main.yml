@@ -39,7 +39,7 @@ jobs:
             git \
             libapr1-dev \
             libaprutil1-dev \
-            libodbcinstq4-dev \
+            unixodbc-dev \
             apache2-dev
 
       - name: Create build directory
