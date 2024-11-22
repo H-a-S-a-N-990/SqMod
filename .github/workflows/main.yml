@@ -16,7 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Reset APT sources
+      - name: Clear APT mirror configuration
+        run: |
+          sudo rm -f /etc/apt/apt-mirrors.txt
+          sudo apt-get update
+
+      - name: Set APT sources
         run: |
           echo "deb http://archive.ubuntu.com/ubuntu/ jammy main universe" | sudo tee /etc/apt/sources.list
           echo "deb http://archive.ubuntu.com/ubuntu/ jammy-updates main universe" | sudo tee -a /etc/apt/sources.list
